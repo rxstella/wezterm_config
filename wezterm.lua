@@ -1,13 +1,16 @@
-local Config = require("config")
+local wezterm = require 'wezterm'
+local config = wezterm.config_builder()
 
-require("events.right-status").setup()
-require("events.tab-title").setup()
-require("events.new-tab-button").setup()
+local appearance = require 'lua.appearance'
+local status = require 'lua.status'
+local keys = require 'lua.keys'
+local launch = require 'lua.launch'
+local tabbar = require 'lua.tabbar' -- 1. 引入
 
-return Config:init()
-  :append(require("config.appearance"))
-  :append(require("config.bindings"))
-  :append(require("config.domains"))
-  :append(require("config.fonts"))
-  :append(require("config.general"))
-  :append(require("config.launch")).options
+appearance.apply(config)
+status.apply()
+keys.apply(config)
+launch.apply(config)
+tabbar.apply(config) -- 2. 应用
+
+return config
